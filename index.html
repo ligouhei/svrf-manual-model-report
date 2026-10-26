@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="基于 SVRF 2022.2 与 2025.1 手册的双模型案例评估，以及领域模型和检索增强建设路线。">
+<title>SVRF 手册理解评估与建设方案</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a class="brand" href="#overview"><span class="brand-icon" aria-hidden="true">S</span>SVRF <span class="brand-light">/ 能力评估</span></a><nav aria-label="主导航"><a href="#versions">版本差异</a><a href="#vision">专有图形</a><a href="#roadmap">建设路线</a></nav><button class="print-button" id="print">打印报告 <span aria-hidden="true">↗</span></button></header>
+<main>
+<section class="hero" id="overview">
+<div class="eyebrow"><span class="dot"></span>技术评估简报 <span class="date">2026.10.26</span></div>
+<div class="hero-grid"><div><h1>SVRF 手册理解<br><span>评估与建设方案</span></h1><p class="hero-lead">GPT‑5.6‑sol × GLM‑5.3‑Flash<br>从跨版本知识迁移，到专有图形的工程解释。</p></div><aside class="hero-note"><div class="note-label">核心判断</div><p>基础阅读与图义理解已可用。<br>下一步重点是<strong>证据完整、版本准确、细节一致</strong>。</p><div class="scope-pills"><span>2022.2 → 2025.1</span><span>svrf_ur.pdf</span><span>精选案例观察</span></div></aside></div>
+<div class="conclusion-strip"><div><span class="index">01</span><p><strong>版本比较</strong>给足两版原文后，两个模型均能识别扩展、不变与证据边界。</p></div><div><span class="index">02</span><p><strong>图形理解</strong>核心几何关系基本正确，额外概括与未标注数值仍需约束。</p></div></div>
+</section>
+<section class="report-section" id="versions">
+<div class="section-heading"><div><div class="eyebrow">01 / 跨版本知识迁移</div><h2>识别真正的变化，避免迁移误判</h2></div><p class="section-summary">按功能对齐两版证据，<br>不按相同页码做文本相减。</p></div>
+<div class="process" aria-label="建议的版本比较流程"><div><b>问题拆解</b><small>版本 · 命令 · 条件</small></div><span>→</span><div><b>分别检索</b><small>精确搜索 / 语义补查</small></div><span>→</span><div><b>证据对齐</b><small>定义 · 限制 · 例外</small></div><span>→</span><div><b>迁移判断</b><small>变化 · 不变 · 未证实</small></div></div>
+<div class="case-tabs" role="tablist" aria-label="版本案例"><button role="tab" aria-selected="true" aria-controls="version-panel" id="version-tab-0" data-version="0">01 <span>命令已有，路径扩展</span></button><button role="tab" aria-selected="false" aria-controls="version-panel" id="version-tab-1" data-version="1" tabindex="-1">02 <span>文档新增覆盖</span></button><button role="tab" aria-selected="false" aria-controls="version-panel" id="version-tab-2" data-version="2" tabindex="-1">03 <span>疑似变化，实际不变</span></button></div>
+<article class="case-card" id="version-panel" role="tabpanel" aria-labelledby="version-tab-0" tabindex="0">
+<div class="case-intro"><span class="badge" id="version-kind"></span><h3 id="version-title"></h3><p id="version-question"></p></div>
+<div class="version-pair"><div class="version-column old"><div class="column-label">2022.2 <span>旧版证据</span></div><p id="version-old"></p><small id="version-old-source"></small></div><div class="version-column new"><div class="column-label">2025.1 <span>新版证据</span></div><p id="version-new"></p><small id="version-new-source"></small></div></div>
+<div class="case-verdict"><span class="verdict-icon">↳</span><div><b>迁移结论</b><p id="version-conclusion"></p></div></div>
+<div class="model-pair"><div><span class="model-name"><i class="model-dot gpt"></i>GPT‑5.6‑sol</span><p id="version-gpt"></p></div><div><span class="model-name"><i class="model-dot glm"></i>GLM‑5.3‑Flash</span><p id="version-glm"></p></div></div>
+</article>
+<details class="disclosure"><summary><span>补充诊断：检索不完整时，错误会怎样发生？</span><span class="plus">＋</span></summary><div class="disclosure-content"><p>单版自动检索辅助案例中，GPT 出现过“同层不同图形间距通常用双层 EXTERNAL”的误导性表述；GLM 混淆 Enclose 与 Enclosure，将 <code>ENC via metal</code> 反写成 <code>ENC metal via</code>。</p><p>即使提供充分原文，GLM 也生成过只有下界的 <code>ENC … &gt;= 0.05</code> 示例，不满足手册的距离约束上界要求。</p><strong>建设重点：纠正概念定位 → 补齐证据 → 校验生成规则。</strong><small>这些是单版辅助诊断，不是跨版本任务的总体准确率。</small></div></details>
+</section>
+<section class="report-section" id="vision">
+<div class="section-heading"><div><div class="eyebrow">02 / 专有图形的工程理解</div><h2>读懂图形，还要守住证据边界</h2></div><p class="section-summary">检查对象与空间关系，<br>也检查额外断言是否有依据。</p></div>
+<div class="vision-layout"><div class="vision-main"><div class="figure-tabs" role="tablist" aria-label="图形案例"><button id="figure-tab-0" role="tab" aria-selected="true" aria-controls="figure-panel" data-figure="0">Boolean AND</button><button id="figure-tab-1" role="tab" aria-selected="false" aria-controls="figure-panel" data-figure="1" tabindex="-1">ANGLE / OBTUSE</button><button id="figure-tab-2" role="tab" aria-selected="false" aria-controls="figure-panel" data-figure="2" tabindex="-1">Enclosure ABUT</button></div><div id="figure-panel" role="tabpanel" aria-labelledby="figure-tab-0" tabindex="0"><div class="figure-frame"><button class="image-open" id="zoom" aria-label="放大手册图片"><img id="figure-image" src="assets/and.png" alt="SVRF 两层 Boolean AND 示意图"><span class="zoom-label">点击放大 ↗</span></button></div><div class="figure-caption"><span id="figure-source"></span><span>原图保留标题与图例</span></div></div></div>
+<aside class="vision-result"><div class="condition-label">输入条件</div><div class="condition-switch" aria-label="图片输入条件"><button id="image-only" aria-pressed="true">只给图片</button><button id="image-text" aria-pressed="false">图片＋正文</button></div><p class="condition-note" id="condition-note"></p><h3 id="figure-title"></h3><p class="figure-question" id="figure-question"></p><div class="result-row"><span class="model-name"><i class="model-dot gpt"></i>GPT‑5.6‑sol</span><p id="figure-gpt"></p></div><div class="result-row"><span class="model-name"><i class="model-dot glm"></i>GLM‑5.3‑Flash</span><p id="figure-glm"></p></div><div class="finding" id="figure-finding"></div></aside></div>
+<div class="vision-principle"><b>验证不止看描述是否流畅</b><p>图元识别 → 空间关系 → 操作语义 → 数值与单位 → 无法判断的内容。<br>图中的输出标记，不自动等于实际工艺违规。</p></div>
+</section>
+<section class="report-section" id="roadmap">
+<div class="section-heading"><div><div class="eyebrow">03 / 领域模型建设</div><h2>内化稳定能力，检索版本事实</h2></div><p class="section-summary">QA 是训练载体，<br>监督目标决定学到什么。</p></div>
+<div class="knowledge-grid"><article class="knowledge internal"><div class="knowledge-label">训练进模型</div><h3>概念与方法</h3><ul><li>SVRF 基础语义、几何与连通性推理</li><li>问题拆解、专业术语映射与补查</li><li>变化 / 不变 / 证据不足的区分</li><li>图形关系理解与规则约束一致性</li></ul></article><article class="knowledge external"><div class="knowledge-label">保留在知识层</div><h3>精确且可追溯的事实</h3><ul><li>指定版本的语法、默认值与限制</li><li>许可证、运行模式及发布依据</li><li>手册原文、页码和交叉引用</li><li>图片、图例与对应版本解释</li></ul></article></div>
+<div class="roadmap"><article><span class="step-number">01</span><div><h3>先修证据链</h3><p>命令与章节索引、双版本对齐、按子问题检索；精确搜索为基础，语义检索按需补充。</p><span class="check-label">验收：必要证据找齐、相似命令不混淆</span></div></article><article><span class="step-number">02</span><div><h3>再训练证据使用与图形推理</h3><p>带版本与干扰段落的 QA、正确与错误规则对照、图形关系标注、反事实与不可回答样本。</p><span class="check-label">验收：未见命令 / 图形家族上的正确性</span></div></article><article><span class="step-number">03</span><div><h3>形成工程验证闭环</h3><p>多轮搜索轨迹训练、独立约束检查；目标版本环境可用时，增加编译与最小版图测试。</p><span class="check-label">验收：迁移建议有效、规则结果一致</span></div></article></div>
+<details class="disclosure"><summary><span>如何确认优化有效，而不只是学会题库？</span><span class="plus">＋</span></summary><div class="disclosure-content"><div class="validation-grid"><div><b>检索</b><p>分版本评估证据召回、直接相关性与覆盖完整性。</p></div><div><b>版本理解</b><p>检查虚构变化、漏掉限制、版本混用和引用支持。</p></div><div><b>视觉理解</b><p>分别评估图元、关系、语义、单位与正确保留判断。</p></div><div><b>工程落地</b><p>检查语法与约束；有目标环境时验证真实执行结果。</p></div></div><p>按命令家族、章节和近重复图形划分训练与测试，保留独立工程师盲评。固定检索器比较模型，固定模型比较检索；同时比较标准证据与自动检索，定位收益来源。</p></div></details>
+</section>
+<section class="method-section"><details class="disclosure"><summary><span>评估范围与参考研究</span><span class="plus">＋</span></summary><div class="disclosure-content"><p><strong>已完成：</strong>3 个跨版本案例的相同原文对照；3 个单版自动检索辅助案例；AND、ANGLE / OBTUSE、ABUT 三组图例。后两组比较只图与图文输入。</p><p><strong>边界：</strong>精选小样本、单次推理及模型辅助原文核验；不是全册准确率或独立工程师盲测。尚未完成两模型同规格的多轮跨版本 Agent 评估，也未执行目标版本 Calibre 编译与运行验证。</p><p><strong>本轮检索基线：</strong>模型生成查询 → SQLite FTS5 / BM25 → 多路结果融合 → 原文页。跨版本案例另提供人工定位的两版原文，以区分阅读能力与检索能力。</p><div class="research-links"><a href="https://arxiv.org/abs/2403.10131" target="_blank" rel="noopener">RAFT · 带干扰证据的领域微调 ↗</a><a href="https://arxiv.org/abs/2503.09516" target="_blank" rel="noopener">Search‑R1 · 搜索策略训练 ↗</a><a href="https://arxiv.org/abs/2407.01449" target="_blank" rel="noopener">ColPali · 视觉文档检索 ↗</a></div><small>参考研究用于方案设计，公开实验收益不代表本场景的预期提升。</small></div></details></section>
+</main><footer><span>SVRF 手册理解评估与建设方案</span><span>2022.2 / 2025.1 · 内容评审版</span></footer>
+<dialog id="image-dialog"><button id="close-dialog" aria-label="关闭放大图片">关闭 ✕</button><img id="dialog-image" alt="手册图片放大查看"></dialog>
+<script src="app.js"></script>
+</body></html>
